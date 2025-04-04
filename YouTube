@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download YouTube videos in various qualities using our easy-to-use tool. Fast, secure, and free of charge.">
+    <meta name="keywords" content="YouTube video downloader, download YouTube videos, video quality, free download">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="YouTube Video Downloader">
+    <meta property="og:description" content="Download YouTube videos easily and quickly in multiple video qualities.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:image" content="https://yourdomain.com/images/logo.png">
+    <title>YouTube Video Downloader</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>YouTube Video Downloader</h1>
+            <p>Download YouTube videos in different quality levels. Just paste the URL!</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="input-section">
+                <label for="video-url">Enter YouTube Video URL:</label>
+                <input type="url" id="video-url" placeholder="Paste YouTube URL here" required />
+                <button id="fetch-video" onclick="fetchVideo()">Fetch Video</button>
+            </section>
+
+            <section id="video-quality-section" class="hidden">
+                <label for="video-quality">Select Video Quality:</label>
+                <select id="video-quality">
+                    <option value="360p">360p</option>
+                    <option value="720p">720p</option>
+                    <option value="1080p">1080p</option>
+                    <option value="4k">4k</option>
+                </select>
+                <button onclick="downloadVideo()">Download</button>
+            </section>
+
+            <section id="video-downloads">
+                <!-- Download links will be dynamically added here -->
+            </section>
+
+            <!-- Google AdSense -->
+            <section class="adsense">
+                <div class="adsense-container">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="YOUR_ADSENSE_CLIENT_ID" data-ad-slot="YOUR_ADSENSE_AD_SLOT_ID" data-ad-format="auto"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 YouTube Video Downloader | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        function fetchVideo() {
+            const url = document.getElementById('video-url').value;
+
+            if (!url) {
+                alert("Please enter a valid YouTube video URL.");
+                return;
+            }
+
+            // Mock data simulating the API response
+            const mockVideoData = {
+                title: "Sample Video",
+                availableQualities: ["360p", "720p", "1080p", "4k"],
+            };
+
+            // Populate the dropdown for video quality
+            const videoQualitySection = document.getElementById('video-quality-section');
+            const videoQualitySelect = document.getElementById('video-quality');
+            
+            // Clear previous options (if any)
+            videoQualitySelect.innerHTML = "";
+
+            mockVideoData.availableQualities.forEach(quality => {
+                const option = document.createElement('option');
+                option.value = quality;
+                option.textContent = quality;
+                videoQualitySelect.appendChild(option);
+            });
+
+            videoQualitySection.classList.remove('hidden');
+            document.getElementById('video-downloads').innerHTML = `
+                <p>Video Title: ${mockVideoData.title}</p>
+                <p>Select quality and hit download.</p>
+            `;
+        }
+
+        function downloadVideo() {
+            const selectedQuality = document.getElementById('video-quality').value;
+            const url = document.getElementById('video-url').value;
+
+            if (!selectedQuality) {
+                alert("Please select a video quality.");
+                return;
+            }
+
+            // Normally, here you would fetch or generate the download link via an API
+            // For now, we simulate the download by creating a download link
+            const downloadLink = document.createElement('a');
+            downloadLink.href = `/download?url=${encodeURIComponent(url)}&quality=${selectedQuality}`; // Example URL
+            downloadLink.download = `video-${selectedQuality}.mp4`; // Customize filename
+            downloadLink.click();
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: #282c34;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        main {
+            padding: 20px 0;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        #video-url {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #video-quality-section,
+        #video-downloads {
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .adsense-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #282c34;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</body>
+
+</html>
