@@ -83,9 +83,37 @@ app.get('/api/download/video', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+const express = require('express');
+const cors = require('cors');
+const ytdl = require('ytdl-core');
+
+const app = express();
+app.use(cors());
+
+app.get('/download', async (req, res) => {
+  try {
+    const url = req.query.url;
+    if (!url) return res.status(400).send('URL missing');
+    
+    const info = await ytdl.getInfo(url);
+    const formats = ytdl.filterFormats(info.formats, 'videoandaudio');
+    
+    res.json({
+      title: info.videoDetails.title,
+      formats: formats.map(f => ({
+        quality: f.qualityLabel,
+        url: f.url,
+        itag: f.itag
+      }))
+    });
+  } catch (err) {
+    res.status(500).send('Error fetching video');
+  }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
