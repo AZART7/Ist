@@ -1,0 +1,12 @@
+name: YouTube Downloader Backend
+on: [push]
+jobs:
+  run-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm install express ytdl-core cors
+      - run: node server.js
