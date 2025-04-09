@@ -715,7 +715,7 @@
             
             try {
                 // Call our backend API
-                const response = await fetch(`/api/download/info?url=${encodeURIComponent(videoUrl)}`);
+                const response = await fetch(`http://localhost:38801/download?url=${encodeURIComponent(videoUrl)}`);
                 
                 if (!response.ok) {
                     throw new Error('Failed to fetch video information');
